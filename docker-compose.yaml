@@ -48,6 +48,15 @@ services:
       MONGO_PASSWORD: password
       MONGO_DATABASE: vacancies_db
 
+  rate-limiter:
+    container_name: 'it-job-rate-limiter'
+    image: jobmarket2024/rate-limiter:dev
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    ports:
+      - 8081:8080
+
 volumes:
   analytics_db_mysql_volume:
   vacancies_db_volume:
