@@ -70,7 +70,7 @@ services:
     container_name: 'it-job-telegram-notification'
     image: jobmarket2024/telegram-notification:dev
     restart: always
-    enviroment:
+    environment:
       SPRING_PROFILES_ACTIVE: dev 
 
 volumes:
