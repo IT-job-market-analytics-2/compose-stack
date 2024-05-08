@@ -65,13 +65,20 @@ services:
       SPRING_PROFILES_ACTIVE: dev
     ports:
       - 8082:8082
-
+  vacancy-import:
+    container_name: 'it-job-vacancy-import'
+    image: jobmarket2024/vacancy-import-service:dev
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    ports:
+      - 8083:8080
   telegram-notification:
     container_name: 'it-job-telegram-notification'
     image: jobmarket2024/telegram-notification:dev
     restart: always
     environment:
-      SPRING_PROFILES_ACTIVE: dev 
+      SPRING_PROFILES_ACTIVE: dev
 
 volumes:
   analytics_db_mysql_volume:
