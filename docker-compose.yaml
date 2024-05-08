@@ -20,6 +20,7 @@ services:
   rabbitmq:
     container_name: 'it-job-rabbitmq'
     image: bitnami/rabbitmq:3.12.0
+    hostname: rabbitmq
     ports:
       - 4369:4369
       - 5672:5672
