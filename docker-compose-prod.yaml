@@ -1,0 +1,91 @@
+version: '3.6'
+
+services:
+  analytics-db:
+    container_name: 'it-job-analytics-db-mysql'
+    image: mysql:8.0
+    platform: linux/amd64
+    command: --max-seeks-for-key=1
+    restart: always
+    volumes:
+      - analytics_db_mysql_volume:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: analytics_db
+      MYSQL_USER: analytics_service
+      MYSQL_PASSWORD: password
+
+  rabbitmq:
+    container_name: 'it-job-rabbitmq'
+    image: bitnami/rabbitmq:3.12.0
+    hostname: rabbitmq
+    ports:
+      - 4369:4369
+      - 5672:5672
+      - 25672:25672
+      - 15672:15672
+    volumes:
+      - ./rabbitmq_create_objects.sh:/docker-entrypoint-initdb.d/rabbitmq_create_objects.sh
+    environment:
+      RABBITMQ_USERNAME: analytics_service
+      RABBITMQ_PASSWORD: password
+
+  vacancies-db:
+    container_name: 'it-job-vacancies-db-mongo'
+    image: mongo:6.0.6
+    volumes:
+      - vacancies_db_volume:/data/db
+      - ./mongodb_create_user.js:/docker-entrypoint-initdb.d/mongodb_create_user.js
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+
+      MONGO_USER: analytics_service
+      MONGO_PASSWORD: password
+      MONGO_DATABASE: vacancies_db
+
+  rate-limiter:
+    container_name: 'it-job-rate-limiter'
+    image: jobmarket2024/rate-limiter:dev
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    ports:
+      - 8081:8080
+
+  vacancy-storage:
+    container_name: 'it-job-vacancy-storage'
+    image: jobmarket2024/vacancy-storage-service:dev
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+
+  vacancy-import:
+    container_name: 'it-job-vacancy-import'
+    image: jobmarket2024/vacancy-import-service:dev
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+
+  telegram-notification:
+    container_name: 'it-job-telegram-notification'
+    image: jobmarket2024/telegram-notification:dev
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+
+  scheduler:
+    container_name: 'it-job-scheduler'
+    image: jobmarket2024/scheduler-service:dev
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+
+
+volumes:
+  analytics_db_mysql_volume:
+  vacancies_db_volume:
