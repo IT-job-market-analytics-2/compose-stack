@@ -9,28 +9,21 @@ services:
     restart: always
     volumes:
       - analytics_db_mysql_volume:/var/lib/mysql
-    ports:
-      - 3306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: analytics_db
-      MYSQL_USER: analytics_service
-      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
   rabbitmq:
     container_name: 'it-job-rabbitmq'
     image: bitnami/rabbitmq:3.12.0
     hostname: rabbitmq
-    ports:
-      - 4369:4369
-      - 5672:5672
-      - 25672:25672
-      - 15672:15672
     volumes:
       - ./rabbitmq_create_objects.sh:/docker-entrypoint-initdb.d/rabbitmq_create_objects.sh
     environment:
-      RABBITMQ_USERNAME: analytics_service
-      RABBITMQ_PASSWORD: password
+      RABBITMQ_USERNAME: ${RABBITMQ_USERNAME}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
 
   vacancies-db:
     container_name: 'it-job-vacancies-db-mongo'
@@ -38,15 +31,13 @@ services:
     volumes:
       - vacancies_db_volume:/data/db
       - ./mongodb_create_user.js:/docker-entrypoint-initdb.d/mongodb_create_user.js
-    ports:
-      - 27017:27017
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
 
-      MONGO_USER: analytics_service
-      MONGO_PASSWORD: password
-      MONGO_DATABASE: vacancies_db
+      MONGO_USER: ${MONGO_USER}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_DATABASE: ${MONGO_DATABASE}
 
   rate-limiter:
     container_name: 'it-job-rate-limiter'
@@ -54,8 +45,6 @@ services:
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: dev
-    ports:
-      - 8081:8080
 
   vacancy-storage:
     container_name: 'it-job-vacancy-storage'
@@ -63,8 +52,6 @@ services:
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: dev
-    ports:
-      - 8082:8082
 
   vacancy-import:
     container_name: 'it-job-vacancy-import'
@@ -72,8 +59,6 @@ services:
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: dev
-    ports:
-      - 8083:8080
 
   telegram-notification:
     container_name: 'it-job-telegram-notification'
@@ -88,8 +73,6 @@ services:
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: dev
-    ports:
-      - 8084:8080
 
 
 volumes:
