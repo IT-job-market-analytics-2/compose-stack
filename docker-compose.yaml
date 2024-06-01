@@ -91,6 +91,15 @@ services:
     ports:
       - 8084:8080
 
+  analytics-builder:
+    container_name: 'it-job-analytics-builder'
+    image: analytics-builder-service:dev
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    ports:
+      - 8085:8080
+
 
 volumes:
   analytics_db_mysql_volume:

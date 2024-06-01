@@ -74,6 +74,13 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: dev
 
+  analytics-builder:
+    container_name: 'it-job-analytics-builder'
+    image: analytics-builder-service:dev
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+
 
 volumes:
   analytics_db_mysql_volume:
