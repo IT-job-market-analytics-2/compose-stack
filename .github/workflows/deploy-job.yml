@@ -24,6 +24,27 @@ jobs:
         run: docker-compose down
       - name: Remove unused data
         run: docker-compose -f docker-compose-prod.yaml pull
+
+  create-envfile:
+    runs-on: self-hosted
+    needs: prepare-environment
+    steps:
+      - name: make envfile
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          envkey_MYSQL_USER: ${{ secrets.MYSQL_USER }}
+          envkey_MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          envkey_MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          envkey_MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+          envkey_RABBITMQ_USERNAME: ${{ secrets.RABBITMQ_USERNAME }}
+          envkey_RABBITMQ_PASSWORD: ${{ secrets.RABBITMQ_PASSWORD }}
+          envkey_MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
+          envkey_MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}
+          envkey_MONGO_USER: ${{ secrets.MONGO_USER }}
+          envkey_MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+          envkey_MONGO_DATABASE: ${{ secrets.MONGO_DATABASE }}
+          file_name: .env
+
   deploy:
     runs-on: self-hosted
     needs: prepare-environment
