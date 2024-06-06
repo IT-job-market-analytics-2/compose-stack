@@ -2,7 +2,7 @@ name: Deploy buy runner
 
 on:
   push:
-    branches: ["*"]
+    branches: [prod]
 
 jobs:
   build:
