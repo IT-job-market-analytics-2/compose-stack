@@ -41,38 +41,45 @@ services:
 
   rate-limiter:
     container_name: 'it-job-rate-limiter'
-    image: jobmarket2024/rate-limiter:dev
+    image: jobmarket2024/rate-limiter:prod
     restart: always
     environment:
-      SPRING_PROFILES_ACTIVE: dev
+      SPRING_PROFILES_ACTIVE: prod
 
   vacancy-storage:
     container_name: 'it-job-vacancy-storage'
-    image: jobmarket2024/vacancy-storage-service:dev
+    image: jobmarket2024/vacancy-storage-service:prod
     restart: always
     environment:
-      SPRING_PROFILES_ACTIVE: dev
+      SPRING_PROFILES_ACTIVE: prod
 
   vacancy-import:
     container_name: 'it-job-vacancy-import'
-    image: jobmarket2024/vacancy-import-service:dev
+    image: jobmarket2024/vacancy-import-service:prod
     restart: always
     environment:
-      SPRING_PROFILES_ACTIVE: dev
+      SPRING_PROFILES_ACTIVE: prod
 
   telegram-notification:
     container_name: 'it-job-telegram-notification'
-    image: jobmarket2024/telegram-notification:dev
+    image: jobmarket2024/telegram-notification:prod
     restart: always
     environment:
-      SPRING_PROFILES_ACTIVE: dev
+      SPRING_PROFILES_ACTIVE: prod
 
   scheduler:
     container_name: 'it-job-scheduler'
-    image: jobmarket2024/scheduler-service:dev
+    image: jobmarket2024/scheduler-service:prod
     restart: always
     environment:
-      SPRING_PROFILES_ACTIVE: dev
+      SPRING_PROFILES_ACTIVE: prod
+
+  analytics-builder:
+    container_name: 'it-job-analytics-builder'
+    image: analytics-builder-service:prod
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
 
 
 volumes:
