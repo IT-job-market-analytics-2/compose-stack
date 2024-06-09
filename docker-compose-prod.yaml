@@ -98,7 +98,7 @@ services:
     container_name: 'it-job-web-ui'
     image: jobmarket2024/web-ui:prod
     ports:
-      - "80:8080"
+      - 80:8080
     environment:
       SPRING_PROFILES_ACTIVE: prod
 
