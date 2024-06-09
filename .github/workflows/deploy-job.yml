@@ -6,29 +6,11 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: set up Java and Maven
-        uses: actions/setup-java@v3
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-          cache: maven
-  prepare-environment:
-    runs-on: self-hosted
-    needs: build
-    steps:
-      - name: Stop and remove containers, networks
-        run: docker-compose down
-      - name: Remove unused data
-        run: docker-compose -f docker-compose-prod.yaml pull
 
-  create-envfile:
-    runs-on: self-hosted
-    needs: prepare-environment
-    steps:
       - name: make envfile
         uses: SpicyPizza/create-envfile@v2.0
         with:
@@ -45,11 +27,8 @@ jobs:
           envkey_MONGO_DATABASE: ${{ secrets.MONGO_DATABASE }}
           file_name: .env
 
-  deploy:
-    runs-on: self-hosted
-    needs: prepare-environment
-    steps:
-      - name: checkout repo
-        uses: actions/checkout@v4
-      - name: docker-compose
+      - name: pull images
+        run: docker-compose -f docker-compose-prod.yaml pull
+
+      - name: restart containers
         run: docker-compose -f docker-compose-prod.yaml up -d
