@@ -90,9 +90,9 @@ services:
 
   rest-api:
     container_name: 'it-job-rest-api'
-    image: jobmarket2024/rest-api-service:dev
+    image: jobmarket2024/rest-api-service:prod
     environment:
-      SPRING_PROFILES_ACTIVE: dev
+      SPRING_PROFILES_ACTIVE: prod
 
   web-ui:
     container_name: 'it-job-web-ui'
