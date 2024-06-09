@@ -100,6 +100,32 @@ services:
     ports:
       - 8085:8080
 
+  vacancy-notifier:
+    container_name: 'it-job-vacancy-notifier'
+    image: jobmarket2024/vacancy-notifier:dev
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    ports:
+      - 8086:8080
+
+  rest-api:
+    container_name: 'it-job-rest-api'
+    image: jobmarket2024/rest-api-service:dev
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    ports:
+      - 8087:8080
+
+  web-ui:
+    container_name: 'it-job-web-ui'
+    image: jobmarket2024/web-ui:dev
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    ports:
+      - 8088:8080
 
 volumes:
   analytics_db_mysql_volume:

@@ -76,11 +76,31 @@ services:
 
   analytics-builder:
     container_name: 'it-job-analytics-builder'
-    image: analytics-builder-service:prod
+    image: jobmarket2024/analytics-builder-service:prod
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: prod
 
+  vacancy-notifier:
+    container_name: 'it-job-vacancy-notifier'
+    image: jobmarket2024/vacancy-notifier:prod
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+
+  rest-api:
+    container_name: 'it-job-rest-api'
+    image: jobmarket2024/rest-api-service:prod
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+
+  web-ui:
+    container_name: 'it-job-web-ui'
+    image: jobmarket2024/web-ui:prod
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
 
 volumes:
   analytics_db_mysql_volume:
