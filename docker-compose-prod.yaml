@@ -90,7 +90,7 @@ services:
 
   rest-api:
     container_name: 'it-job-rest-api'
-    image: jobmarket2024/rest-api-service:prod
+    image: jobmarket2024/rest-api-service:dev
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: prod
