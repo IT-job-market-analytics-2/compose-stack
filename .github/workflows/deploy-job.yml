@@ -28,6 +28,9 @@ jobs:
           envkey_BOT_NAME: ${{ secrets.BOT_NAME }}
           envkey_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           file_name: .env
+          directory: "./"
+          fail_on_empty: false
+          sort_keys: false
 
       - name: pull images
         run: docker-compose -f docker-compose-prod.yaml pull
