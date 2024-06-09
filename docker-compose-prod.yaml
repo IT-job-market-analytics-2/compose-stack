@@ -93,6 +93,7 @@ services:
     image: jobmarket2024/rest-api-service:prod
     environment:
       SPRING_PROFILES_ACTIVE: prod
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
   web-ui:
     container_name: 'it-job-web-ui'
