@@ -97,6 +97,7 @@ services:
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: dev
+
   grafana:
     build: './grafana'
     ports:
@@ -106,6 +107,7 @@ services:
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
+
   prometheus:
     image: prom/prometheus
     ports:
