@@ -65,14 +65,7 @@ services:
       SPRING_PROFILES_ACTIVE: dev
     ports:
       - 8082:8082
-  rest-api:
-    container_name: 'it-job-vacancy-rest-api'
-    image: jobmarket2024/rest-api-service:dev
-    restart: always
-    environment:
-      SPRING_PROFILES_ACTIVE: dev
-    ports:
-      - 8082:8082
+
   vacancy-import:
     container_name: 'it-job-vacancy-import'
     image: jobmarket2024/vacancy-import-service:dev
@@ -81,9 +74,26 @@ services:
       SPRING_PROFILES_ACTIVE: dev
     ports:
       - 8083:8080
+
   telegram-notification:
     container_name: 'it-job-telegram-notification'
     image: jobmarket2024/telegram-notification:dev
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+
+  scheduler:
+    container_name: 'it-job-scheduler'
+    image: jobmarket2024/scheduler-service:dev
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    ports:
+      - 8084:8080
+
+  analytics-builder:
+    container_name: 'it-job-analytics-builder'
+    image: analytics-builder-service:dev
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: dev
