@@ -87,7 +87,26 @@ services:
     image: analytics-builder-service:dev
     restart: always
     environment:
+
       SPRING_PROFILES_ACTIVE: dev 
+
+  grafana:
+    build: './grafana'
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus:/prometheus
 
 volumes:
   analytics_db_mysql_volume:
