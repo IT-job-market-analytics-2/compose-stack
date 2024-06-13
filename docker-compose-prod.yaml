@@ -87,6 +87,8 @@ services:
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: prod
+      RABBITMQ_USERNAME: ${RABBITMQ_USERNAME}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
 
   analytics-builder:
     container_name: 'it-job-analytics-builder'
